@@ -8,9 +8,11 @@ SRCS = main.cpp \
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
+
 $(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
@@ -23,6 +25,7 @@ rm -f $(OBJS) $(DEPS)
 
 fclean: clean
 rm -f $(NAME)
+
 
 re: fclean all
 
