@@ -1,24 +1,31 @@
-NAME = identify
+NAME = serialize
+CC = c++
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g
+DEPFLAGS = -MMD -MP
 
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-
-SRCS = main.cpp Base.cpp
+SRCS = main.cpp \
+       Serializer.cpp
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
+
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+
+$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+-include $(DEPS)
 
 clean:
-	rm -f $(OBJS)
+rm -f $(OBJS) $(DEPS)
 
 fclean: clean
-	rm -f $(NAME)
+rm -f $(NAME)
+
 
 re: fclean all
 
